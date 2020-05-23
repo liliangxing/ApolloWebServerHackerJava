@@ -41,9 +41,14 @@ public class Swingclient extends JFrame  implements  ActionListener {
             {
                 systemTray = SystemTray.getSystemTray();// 获得系统托盘的实例
                 URL path = Swingclient.class.getClassLoader().getResource("logo.png");
+                URL path2 = Swingclient.class.getClassLoader().getResource("logo.jpg");
                 System.out.println(path);
-                Image imgae = ImageIO.read(path);
-                trayIcon = new TrayIcon(imgae);
+                Image image = ImageIO.read(path);
+                Image image2 = ImageIO.read(path2);
+                // 这一条就是
+                this.setIconImage(image2);
+
+                trayIcon = new TrayIcon(image);
                 systemTray.add(trayIcon);// 设置托盘的图标
                 trayIcon.addMouseListener(iconAdap);//为图标设置鼠标监听器
             }
