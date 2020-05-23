@@ -12,10 +12,11 @@ import com.notes.utils.ReadConfigUtil;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -23,7 +24,45 @@ import java.util.Properties;
 @Component
 public class Swingclient extends JFrame  implements  ActionListener {
     private final static String path = ReadConfigUtil.path;
-    public void actionPerformed(ActionEvent e)
+    private TrayIcon trayIcon;//托盘图标
+    private SystemTray systemTray;//系统托盘  //
+
+    public void minimizeToTray() {
+
+        MouseAdapter iconAdap = new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2)//双击托盘窗口再现
+                    setExtendedState(Frame.NORMAL);
+                setVisible(true);
+            }
+        };
+        try {
+            if (SystemTray.isSupported()) // 判断当前平台是否支持系统托盘
+            {
+                systemTray = SystemTray.getSystemTray();// 获得系统托盘的实例
+                URL path = Swingclient.class.getClassLoader().getResource("logo.png");
+                System.out.println(path);
+                Image imgae = ImageIO.read(path);
+                trayIcon = new TrayIcon(imgae);
+                systemTray.add(trayIcon);// 设置托盘的图标
+                trayIcon.addMouseListener(iconAdap);//为图标设置鼠标监听器
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        WindowAdapter winAdap = new WindowAdapter() {
+            public void windowIconified(WindowEvent e) {
+                dispose();//窗口最小化时dispose该窗口
+            }
+        };
+
+        addWindowListener(winAdap);
+
+    }
+
+        public void actionPerformed(ActionEvent e)
     {
     }
     /**
@@ -63,7 +102,7 @@ public class Swingclient extends JFrame  implements  ActionListener {
     }
 
     public Swingclient() {
-
+        minimizeToTray();
         getContentPane().setLayout(null);
 
         //登录部分
