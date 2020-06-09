@@ -7,6 +7,7 @@ package com.notes;
  */
 
 import com.notes.spring.interceptor.MyInterceptor;
+import com.notes.utils.AESUtil;
 import com.notes.utils.PropertiesUtils;
 import com.notes.utils.ReadConfigUtil;
 import org.springframework.context.annotation.Configuration;
@@ -80,6 +81,10 @@ public class Swingclient extends JFrame  implements  ActionListener {
      * 用户名
      */
     private JTextField configUrl;
+    /**
+     * 用户名
+     */
+    private JTextField keyText;
 
 
 
@@ -87,6 +92,11 @@ public class Swingclient extends JFrame  implements  ActionListener {
      * 登录按钮
      */
     private JButton loginButton;
+
+    /**
+     * 生成秘钥
+     */
+    private JButton keyButton;
 
 
 
@@ -129,10 +139,19 @@ public class Swingclient extends JFrame  implements  ActionListener {
         //登录
         loginButton = new JButton("保存配置");
         loginButton.setFont(new Font("宋体", Font.PLAIN, 12));
-
-
         loginButton.setBounds(315, 30, 95, 23);
         getContentPane().add(loginButton);
+
+        //登录
+        keyButton = new JButton("生成秘钥");
+        keyButton.setFont(new Font("宋体", Font.PLAIN, 12));
+        keyButton.setBounds(76, 5, 95, 23);
+        getContentPane().add(keyButton);
+
+        keyText = new JTextField();
+        keyText.setBounds(180, 6, 240, 21);
+        getContentPane().add(keyText);
+        keyText.setColumns(2);
 
 
 
@@ -200,6 +219,15 @@ public class Swingclient extends JFrame  implements  ActionListener {
                    }
                }
 
+            }
+        });
+
+        keyButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                keyText.setText(AESUtil.getTransactionID());
+                keyText.requestFocus();
+                keyText.selectAll();
+                JOptionPane.showMessageDialog(null, "生成成功！", "提示", JOptionPane.PLAIN_MESSAGE);
             }
         });
         //==============================================================//

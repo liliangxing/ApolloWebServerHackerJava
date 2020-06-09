@@ -91,6 +91,18 @@
             <artifactId>commons-configuration</artifactId>
             <version>${commons-configuration-version}</version>
         </dependency>
+
+        <!-- AES加解密 -->
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk15on</artifactId>
+            <version>1.54</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.13</version>
+        </dependency>
     </dependencies>
 
     <build>
