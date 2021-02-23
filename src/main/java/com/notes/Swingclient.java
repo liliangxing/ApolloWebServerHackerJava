@@ -8,6 +8,7 @@ package com.notes;
 
 import com.notes.spring.interceptor.MyInterceptor;
 import com.notes.utils.AESUtil;
+import com.notes.utils.ChangLianConstant;
 import com.notes.utils.PropertiesUtils;
 import com.notes.utils.ReadConfigUtil;
 import org.springframework.context.annotation.Configuration;
@@ -76,7 +77,14 @@ public class Swingclient extends JFrame  implements  ActionListener {
      */
     private static final long serialVersionUID = 2572235358190956651L;
 
-
+    /**
+     * 用户名
+     */
+    private JTextField channalUserText;
+    /**
+     * 用户名
+     */
+    private JTextField entityKeyText;
     /**
      * 用户名
      */
@@ -120,14 +128,33 @@ public class Swingclient extends JFrame  implements  ActionListener {
         minimizeToTray();
         getContentPane().setLayout(null);
 
+        //channelUser
+        JLabel lblChanl = new JLabel("channelUserName:");
+        lblChanl.setFont(new Font("宋体", Font.PLAIN, 12));
+        lblChanl.setBounds(76, 5, 204, 15);
+        getContentPane().add(lblChanl);
+
+        channalUserText = new JTextField();
+        channalUserText.setBounds(180, 6, 40, 21);
+        getContentPane().add(channalUserText);
+        channalUserText.setColumns(10);
+        channalUserText.setText(ChangLianConstant.CHANNEL_USER_NAME);
+
+        entityKeyText = new JTextField();
+        entityKeyText.setBounds(225, 6, 195, 21);
+        getContentPane().add(entityKeyText);
+        entityKeyText.setColumns(10);
+        entityKeyText.setText(ChangLianConstant.ENTITY_KEY);
+
+
         //登录部分
         JLabel lblIp = new JLabel("配置中心地址");
         lblIp.setFont(new Font("宋体", Font.PLAIN, 12));
-        lblIp.setBounds(76, 60, 204, 15);
+        lblIp.setBounds(76, 90, 204, 15);
         getContentPane().add(lblIp);
 
         configUrl = new JTextField();
-        configUrl.setBounds(159, 60, 252, 21);
+        configUrl.setBounds(159, 90, 252, 21);
         getContentPane().add(configUrl);
         configUrl.setColumns(10);
 
@@ -139,17 +166,17 @@ public class Swingclient extends JFrame  implements  ActionListener {
         //登录
         loginButton = new JButton("保存配置");
         loginButton.setFont(new Font("宋体", Font.PLAIN, 12));
-        loginButton.setBounds(315, 30, 95, 23);
+        loginButton.setBounds(315, 65, 95, 23);
         getContentPane().add(loginButton);
 
         //登录
         keyButton = new JButton("生成秘钥");
         keyButton.setFont(new Font("宋体", Font.PLAIN, 12));
-        keyButton.setBounds(76, 5, 95, 23);
+        keyButton.setBounds(76, 35, 95, 23);
         getContentPane().add(keyButton);
 
         keyText = new JTextField();
-        keyText.setBounds(180, 6, 240, 21);
+        keyText.setBounds(180, 36, 240, 21);
         getContentPane().add(keyText);
         keyText.setColumns(2);
 
@@ -160,7 +187,7 @@ public class Swingclient extends JFrame  implements  ActionListener {
         chatContext.setLineWrap(true);
 
         JScrollPane scrollBar = new JScrollPane(chatContext);
-        scrollBar.setBounds(76, 96, 93, 403);
+        scrollBar.setBounds(76, 131, 93, 403);
         scrollBar.setSize(336, 300);
         getContentPane().add(scrollBar);
         chatContext.setText( properties.getProperty("jsonStr"));
@@ -176,7 +203,7 @@ public class Swingclient extends JFrame  implements  ActionListener {
         txtLogInfo.paintImmediately(txtLogInfo.getBounds());
         txtLogInfo.setEditable(false);
         txtLogInfo.setFont(new Font("宋体", Font.PLAIN, 12));
-        scrollBar1.setBounds(4, 406, 476, 250);
+        scrollBar1.setBounds(4, 441, 476, 250);
         getContentPane().add(scrollBar1);
 
 
@@ -224,7 +251,9 @@ public class Swingclient extends JFrame  implements  ActionListener {
 
         keyButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                keyText.setText(AESUtil.getTransactionID());
+                String channelUser =  channalUserText.getText();
+                String entityKey =  entityKeyText.getText();
+                keyText.setText(AESUtil.getTransactionID(channelUser,entityKey));
                 keyText.requestFocus();
                 keyText.selectAll();
                 JOptionPane.showMessageDialog(null, "生成成功！", "提示", JOptionPane.PLAIN_MESSAGE);

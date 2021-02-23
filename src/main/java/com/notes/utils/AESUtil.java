@@ -117,13 +117,13 @@ public class AESUtil {
     }
 
 
-    public static String getTransactionID() {
+    public static String getTransactionID(String channelUser,String entityKey) {
         //获取当前UTC时间
         final String dateTime = UTCTimeUtil.getUTCTime(UTCTimeUtil.SDF1);
         final String random = UTCTimeUtil.buildRandom(Boolean.TRUE, 4);
         //格式：ChannelUserName|CurrentTimeStamp|RandomNumber
-        final String content = String.join("", ChangLianConstant.CHANNEL_USER_NAME, "|", dateTime, "|", random);
-        byte[] keyBytes = ChangLianConstant.ENTITY_KEY.getBytes(charset);
+        final String content = String.join("", channelUser, "|", dateTime, "|", random);
+        byte[] keyBytes = entityKey.getBytes(charset);
         return  encrypt(content, keyBytes);
     }
 

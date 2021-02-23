@@ -16,11 +16,11 @@ public class ChangLianConstant {
     /**
      * 渠道用户名
      */
-    public static String CHANNEL_USER_NAME  = "8815247";
+    public static String CHANNEL_USER_NAME  = "7716804";
     /**
      * 渠道加密key值
      */
-    public static String ENTITY_KEY = "f85PqLgev13D7PfgeHSYhMiH2p1JmJF2";
+    public static String ENTITY_KEY = "11Kv3GfsDV2RnuNriHwug2sL7wcsDdUh";
     /**
      * 畅联方集团编码
      */
