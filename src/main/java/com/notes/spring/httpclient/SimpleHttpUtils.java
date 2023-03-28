@@ -1,7 +1,9 @@
 package com.notes.spring.httpclient;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.output.ByteArrayOutputStream;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.core.Logger;
+
 
 import javax.net.ssl.*;
 import java.io.*;
@@ -17,8 +19,8 @@ import java.security.cert.X509Certificate;
 import java.util.*;
 import java.util.Map.Entry;
 
+@Slf4j
 public class SimpleHttpUtils {
-	private static final Logger logger = Logger.getLogger(SimpleHttpUtils.class);
 
 	/**
 	 * 默认字符编码
@@ -246,7 +248,7 @@ public class SimpleHttpUtils {
 			result.setContent(resultString);
 			return result;
 		} catch (Exception e) {
-			logger.warn("connection error : " + e.getMessage());
+			log.warn("connection error : " + e.getMessage());
 			return new SimpleHttpResult(e);
 		} finally {
 			if (urlConn != null) {
@@ -387,7 +389,7 @@ public class SimpleHttpUtils {
 				}
 			}
 		}catch(Exception e){
-			logger.error(e.getMessage(), e);
+			log.error(e.getMessage(), e);
 		}
 	}
 	
@@ -461,7 +463,7 @@ public class SimpleHttpUtils {
     	try{
     		return loadClientKeyStore(new FileInputStream(keyStorePath), keyStorePass, privateKeyPass);
     	}catch(Exception e){
-    		logger.error("loadClientKeyFactory fail : "+e.getMessage(), e);
+    		log.error("loadClientKeyFactory fail : "+e.getMessage(), e);
     		return null;
     	}
     }
@@ -474,7 +476,7 @@ public class SimpleHttpUtils {
     		kmf.init(ks, privateKeyPass.toCharArray());
     		return new ClientKeyStore(kmf);
     	}catch(Exception e){
-    		logger.error("loadClientKeyFactory fail : "+e.getMessage(), e);
+    		log.error("loadClientKeyFactory fail : "+e.getMessage(), e);
     		return null;
     	}
     }
@@ -483,7 +485,7 @@ public class SimpleHttpUtils {
     	try{
     		return loadTrustKeyStore(new FileInputStream(keyStorePath), keyStorePass);
     	}catch(Exception e){
-    		logger.error("loadTrustCertFactory fail : "+e.getMessage(), e);
+    		log.error("loadTrustCertFactory fail : "+e.getMessage(), e);
     		return null;
     	}
     }
@@ -496,7 +498,7 @@ public class SimpleHttpUtils {
     		tmf.init(ks);
     		return new TrustKeyStore(tmf);
     	}catch(Exception e){
-    		logger.error("loadTrustCertFactory fail : "+e.getMessage(), e);
+    		log.error("loadTrustCertFactory fail : "+e.getMessage(), e);
     		return null;
     	}
     }
